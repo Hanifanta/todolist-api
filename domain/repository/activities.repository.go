@@ -43,7 +43,7 @@ func (a activitiesRepositoryImpl) FindAllActivityGroup(tx *gorm.DB) ([]*entity.A
 
 func (a activitiesRepositoryImpl) FindActivityGroupById(tx *gorm.DB, id int) (*entity.Activity, error) {
 	var activity entity.Activity
-	find := tx.Take(&activity)
+	find := tx.Where("id = ?", id).Take(&activity)
 	if find.Error != nil {
 		log.Println(fmt.Sprintf("Error when find activity group by id: %v", find.Error))
 		return nil, find.Error
@@ -61,7 +61,8 @@ func (a activitiesRepositoryImpl) UpdateActivityGroup(tx *gorm.DB, value *entity
 }
 
 func (a activitiesRepositoryImpl) DeleteActivityGroup(tx *gorm.DB, id int) error {
-	deletes := tx.Delete(&entity.Activity{}, id)
+	var activity entity.Activity
+	deletes := tx.Where("id = ?", id).Delete(&activity)
 	if deletes.Error != nil {
 		log.Println(fmt.Sprintf("Error when delete activity group: %v", deletes.Error))
 		return deletes.Error

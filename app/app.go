@@ -26,7 +26,7 @@ func Bootstrap(config *BootstrapConfig) {
 
 	// setup usecases
 	activitiesUsecase := usecase.NewActivitiesUsecase(config.DB, config.Validate, activitiesRepository)
-	todosUsecase := usecase.NewTodosUsecase(config.DB, config.Validate, todosRepository)
+	todosUsecase := usecase.NewTodosUsecase(config.DB, config.Validate, todosRepository, activitiesRepository)
 
 	// setup controller
 	activitiesController := controller.NewActivitiesController(activitiesUsecase)

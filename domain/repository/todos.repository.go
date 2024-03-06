@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"fmt"
 	"gorm.io/gorm"
 	"log"
@@ -9,7 +10,7 @@ import (
 
 type TodosRepository interface {
 	CreateTodoItem(tx *gorm.DB, value *entity.Todos) error
-	FindAllTodoItem(tx *gorm.DB) ([]*entity.Todos, error)
+	FindAllTodoItem(tx *gorm.DB, id int) ([]*entity.Todos, error)
 	FindTodoItemById(tx *gorm.DB, id int) (*entity.Todos, error)
 	UpdateTodoItem(tx *gorm.DB, value *entity.Todos, id int) error
 	DeleteTodoItem(tx *gorm.DB, value *entity.Todos, id int) error
@@ -31,19 +32,26 @@ func (t todoRepositoryImpl) CreateTodoItem(tx *gorm.DB, value *entity.Todos) err
 	return nil
 }
 
-func (t todoRepositoryImpl) FindAllTodoItem(tx *gorm.DB) ([]*entity.Todos, error) {
+func (t todoRepositoryImpl) FindAllTodoItem(tx *gorm.DB, id int) ([]*entity.Todos, error) {
 	var todos []*entity.Todos
-	find := tx.Find(&todos)
+	query := tx
+	if id > 0 {
+		query = query.Where("activity_group_id = ?", id)
+	}
+	find := query.Find(&todos)
 	if find.Error != nil {
-		log.Println(fmt.Sprintf("Error when find all activity group: %v", find.Error))
+		log.Println(fmt.Sprintf("Error when find all todo items: %v", find.Error))
 		return nil, find.Error
+	}
+	if len(todos) == 0 {
+		return nil, errors.New("No todo items found with the given id")
 	}
 	return todos, nil
 }
 
 func (t todoRepositoryImpl) FindTodoItemById(tx *gorm.DB, id int) (*entity.Todos, error) {
 	var todo entity.Todos
-	find := tx.Take(&todo)
+	find := tx.Where("id = ?", id).Take(&todo)
 	if find.Error != nil {
 		log.Println(fmt.Sprintf("Error when find activity group by id: %v", find.Error))
 		return nil, find.Error

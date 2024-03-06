@@ -1,0 +1,733 @@
+openapi: 3.0.0
+info:
+  title: DEVCODE BE API
+  version: 1.0.0
+servers:
+  - url: http://{{base_url}}
+tags:
+  - name: ACTIVITY
+  - name: TODO
+paths:
+  /activity-groups:
+    get:
+      tags:
+        - ACTIVITY
+      summary: Get All
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:30:31 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+            Content-Length:
+              schema:
+                type: integer
+                example: '160'
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data:
+                  - id: 3
+                    title: testingUpdateLagi
+                    email: wowow@gmail.com
+                    created_at: '2024-03-06T13:48:43+07:00'
+                    updated_at: '2024-03-06T14:58:27+07:00'
+                  - id: 4
+                    title: testLagi
+                    email: wow@gmail.com
+                    created_at: '2024-03-06T15:05:04+07:00'
+                    updated_at: '2024-03-06T15:05:04+07:00'
+                errors: null
+    post:
+      tags:
+        - ACTIVITY
+      summary: Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: wow@gmail.com
+      responses:
+        '201':
+          description: Created
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:05:03 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '194'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 201
+                status: Success
+                data:
+                  id: 4
+                  title: testLagi
+                  email: wow@gmail.com
+                  created_at: '2024-03-06T15:05:04.355+07:00'
+                  updated_at: '2024-03-06T15:05:04.355+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:38:09 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '67'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 400
+                status: Title is required
+                data: null
+                errors: null
+  /activity-groups/132:
+    get:
+      tags:
+        - ACTIVITY
+      summary: Get One
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:32:33 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '197'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data:
+                  id: 3
+                  title: testingUpdateLagi
+                  email: wowow@gmail.com
+                  created_at: '2024-03-06T13:48:43+07:00'
+                  updated_at: '2024-03-06T14:58:27+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:31:39 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '71'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 400
+                status: Activity id not found
+                data: null
+                errors: null
+  /activity-groups/2:
+    delete:
+      tags:
+        - ACTIVITY
+      summary: Delete
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:34:04 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '57'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data: null
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:33:46 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '71'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 400
+                status: Activity id not found
+                data: null
+                errors: null
+  /activity-groups/7329323:
+    patch:
+      tags:
+        - ACTIVITY
+      summary: Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: testing
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:36:40 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '191'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data:
+                  id: 0
+                  title: coba updated
+                  email: wowow@gmail.com
+                  created_at: '0001-01-01T00:00:00Z'
+                  updated_at: '2024-03-06T16:36:41.238+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:34:43 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '71'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: FAILED (ID Not Found)
+                  value:
+                    code: 400
+                    status: Activity id not found
+                    data: null
+                    errors: null
+                example-1:
+                  summary: FAILED (Title is Required)
+                  value:
+                    code: 400
+                    status: Title is required
+                    data: null
+                    errors: null
+  /todo-items:
+    get:
+      tags:
+        - TODO
+      summary: Get All
+      parameters:
+        - name: activity_group_id
+          in: query
+          schema:
+            type: integer
+          example: '999999'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:22:43 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+            Content-Length:
+              schema:
+                type: integer
+                example: '196'
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: SUCCESS (Without Query)
+                  value:
+                    code: 200
+                    status: Success
+                    data:
+                      - id: 4
+                        title: titleLagiUpdate
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T07:47:06+07:00'
+                        updated_at: '2024-03-06T15:02:53+07:00'
+                      - id: 12
+                        title: titleLagi
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T13:19:08+07:00'
+                        updated_at: '2024-03-06T13:19:08+07:00'
+                      - id: 13
+                        title: titleLagi
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T13:19:21+07:00'
+                        updated_at: '2024-03-06T13:19:21+07:00'
+                      - id: 14
+                        title: titleLagi
+                        activity_group_id: 4
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T15:08:35+07:00'
+                        updated_at: '2024-03-06T15:08:35+07:00'
+                    errors: null
+                example-1:
+                  summary: SUCCESS (With Query)
+                  value:
+                    code: 200
+                    status: Success
+                    data:
+                      - id: 4
+                        title: titleLagiUpdate
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T07:47:06+07:00'
+                        updated_at: '2024-03-06T15:02:53+07:00'
+                      - id: 12
+                        title: titleLagi
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T13:19:08+07:00'
+                        updated_at: '2024-03-06T13:19:08+07:00'
+                      - id: 13
+                        title: titleLagi
+                        activity_group_id: 2
+                        is_active: true
+                        priority: high
+                        created_at: '2024-03-06T13:19:21+07:00'
+                        updated_at: '2024-03-06T13:19:21+07:00'
+                    errors: null
+    post:
+      tags:
+        - TODO
+      summary: Create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: item 5.4
+      responses:
+        '201':
+          description: Created
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:08:34 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+            Content-Length:
+              schema:
+                type: integer
+                example: '132'
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 201
+                status: Success
+                data:
+                  id: 14
+                  title: titleLagi
+                  activity_group_id: 4
+                  is_active: true
+                  priority: high
+                  created_at: '2024-03-06T15:08:34.635+07:00'
+                  updated_at: '2024-03-06T15:08:34.635+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:55:13 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '77'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: FAILED (Activity Group ID Not Found)
+                  value:
+                    code: 400
+                    status: Activity Group ID Not Found
+                    data: null
+                    errors: null
+                example-1:
+                  summary: FAILED (Activity Group ID is Required)
+                  value:
+                    code: 400
+                    status: Activity group id is required
+                    data: null
+                    errors: null
+                example-2:
+                  summary: FAILED (Title is Required)
+                  value:
+                    code: 400
+                    status: Title is required
+                    data: null
+                    errors: null
+  /todo-items/1:
+    get:
+      tags:
+        - TODO
+      summary: Get One
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:10:29 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+            Content-Length:
+              schema:
+                type: integer
+                example: '143'
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data:
+                  id: 4
+                  title: titleLagiUpdate
+                  activity_group_id: 2
+                  is_active: true
+                  priority: high
+                  created_at: '2024-03-06T07:47:06+07:00'
+                  updated_at: '2024-03-06T15:02:53+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:11:40 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '67'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 400
+                status: Todo id not found
+                data: null
+                errors: null
+  /todo-items/30:
+    delete:
+      tags:
+        - TODO
+      summary: Delete
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 07:56:17 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '57'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data: null
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:04:12 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '67'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 400
+                status: Todo id not found
+                data: null
+                errors: null
+  /todo-items/4:
+    patch:
+      tags:
+        - TODO
+      summary: Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                activity_group_id: 2
+                is_active: true
+                title: titleLagiUpdate
+                priority: high
+      responses:
+        '200':
+          description: OK
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 08:02:52 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Encoding:
+              schema:
+                type: string
+                example: br
+            Content-Length:
+              schema:
+                type: integer
+                example: '145'
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 200
+                status: Success
+                data:
+                  id: 0
+                  title: titleLagiUpdate
+                  activity_group_id: 2
+                  is_active: true
+                  priority: high
+                  created_at: '0001-01-01T00:00:00Z'
+                  updated_at: '2024-03-06T15:02:52.873+07:00'
+                errors: null
+        '400':
+          description: Bad Request
+          headers:
+            Date:
+              schema:
+                type: string
+                example: Wed, 06 Mar 2024 09:46:35 GMT
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '67'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: FAILED (ID Not Found)
+                  value:
+                    code: 400
+                    status: Todo id not found
+                    data: null
+                    errors: null
+                example-1:
+                  summary: FAILED (Activity Group ID Not Found)
+                  value:
+                    code: 400
+                    status: Activity Group ID Not Found
+                    data: null
+                    errors: null
+                example-2:
+                  summary: FAILED (Activity Group ID is Required)
+                  value:
+                    code: 400
+                    status: Activity Group ID is required
+                    data: null
+                    errors: null
+                example-3:
+                  summary: FAILED (Title is Required)
+                  value:
+                    code: 400
+                    status: Title is required
+                    data: null
+                    errors: null

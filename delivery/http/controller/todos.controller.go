@@ -59,7 +59,8 @@ func (t todosControllerImpl) CreateTodoItem(ctx *fiber.Ctx) error {
 }
 
 func (t todosControllerImpl) FindAllTodoItem(ctx *fiber.Ctx) error {
-	result, err := t.todosUsecase.FindAllTodoItem(ctx.UserContext())
+	id, _ := strconv.Atoi(ctx.Query("activity_group_id", "0"))
+	result, err := t.todosUsecase.FindAllTodoItem(ctx.UserContext(), id)
 	if err != nil {
 		resp, statusCode := util.ConstructBaseResponse(
 			util.BaseResponse{

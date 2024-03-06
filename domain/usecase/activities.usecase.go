@@ -2,12 +2,15 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 	"log"
+	"strings"
 	"todolist-api/delivery/http/dto/request"
 	"todolist-api/delivery/http/dto/response"
 	"todolist-api/domain/repository"
+	"todolist-api/shared/util"
 )
 
 type ActivitiesUsecase interface {
@@ -35,7 +38,16 @@ func (a activitiesUsecaseImpl) CreateActivityGroup(ctx context.Context, requestD
 	err := a.Validate.Struct(requestData)
 	if err != nil {
 		log.Printf("Invalid Request Body: %v", err)
-		return nil, err
+		validationErrors := err.(validator.ValidationErrors)
+		var errorMessages []string
+		for _, e := range validationErrors {
+			log.Printf("Field: %s, Tag: %s, Param: %s", e.Field(), e.Tag(), e.Param())
+			switch {
+			case e.Field() == "Title" && e.Tag() == "required":
+				errorMessages = append(errorMessages, "Title is required")
+			}
+		}
+		return nil, errors.New(strings.Join(errorMessages, "; "))
 	}
 
 	requestDataEntity := requestData.ToEntity()
@@ -83,8 +95,9 @@ func (a activitiesUsecaseImpl) FindActivityGroupById(ctx context.Context, id int
 
 	activity, err := a.ActivitiesRepository.FindActivityGroupById(tx, id)
 	if err != nil {
-		tx.Rollback()
-		log.Printf("Error when find activity group by id: %v", err)
+		if err == gorm.ErrRecordNotFound {
+			return nil, util.ActivityIdNotFound
+		}
 		return nil, err
 	}
 
@@ -98,18 +111,35 @@ func (a activitiesUsecaseImpl) FindActivityGroupById(ctx context.Context, id int
 
 func (a activitiesUsecaseImpl) UpdateActivityGroup(ctx context.Context, id int, requestData *request.CreateActivityGroupRequest) (*response.CreateActivityResponse, error) {
 	tx := a.DB.WithContext(ctx).Begin()
-	defer tx.Rollback()
 
 	err := a.Validate.Struct(requestData)
 	if err != nil {
 		log.Printf("Invalid Request Body: %v", err)
-		return nil, err
+		validationErrors := err.(validator.ValidationErrors)
+		var errorMessages []string
+		for _, e := range validationErrors {
+			log.Printf("Field: %s, Tag: %s, Param: %s", e.Field(), e.Tag(), e.Param())
+			switch {
+			case e.Field() == "Title" && e.Tag() == "required":
+				errorMessages = append(errorMessages, "Title is required")
+			}
+		}
+		tx.Rollback()
+		return nil, errors.New(strings.Join(errorMessages, "; "))
+	}
+
+	activity, err := a.ActivitiesRepository.FindActivityGroupById(tx, id)
+	if err != nil || activity == nil {
+		tx.Rollback()
+		log.Printf("Error when find activity group by id: %v", err)
+		return nil, util.ActivityIdNotFound
 	}
 
 	requestDataEntity := requestData.ToEntity()
 
 	err = a.ActivitiesRepository.UpdateActivityGroup(tx, requestDataEntity, id)
 	if err != nil {
+		tx.Rollback()
 		log.Printf("Error when update activity group: %v", err)
 		return nil, err
 	}
@@ -126,8 +156,16 @@ func (a activitiesUsecaseImpl) DeleteActivityGroup(ctx context.Context, id int) 
 	tx := a.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	err := a.ActivitiesRepository.DeleteActivityGroup(tx, id)
+	activity, err := a.ActivitiesRepository.FindActivityGroupById(tx, id)
+	if err != nil || activity == nil {
+		tx.Rollback()
+		log.Printf("Error when find activity group by id: %v", err)
+		return util.ActivityIdNotFound
+	}
+
+	err = a.ActivitiesRepository.DeleteActivityGroup(tx, id)
 	if err != nil {
+		tx.Rollback()
 		log.Printf("Error when delete activity group: %v", err)
 		return err
 	}
