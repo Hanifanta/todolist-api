@@ -16,7 +16,10 @@ migratedown:
 migratefix:
 	migrate -path db/migrations -database "mysql://root:root@tcp(127.0.0.1:3306)/todolist?charset=utf8mb4&parseTime=True&loc=Local" -verbose force $(version)
 
+runapp:
+	go run main.go
+
 test:
 	go test -v -cover ./...
 
-PHONY: createdb dropdb migrate_create migrate_up migrate_down test migrate_fix
+PHONY: createdb dropdb migrate_create migrate_up migrate_down test migrate_fix runapp
